@@ -65,13 +65,14 @@ add_action('admin_menu', 'signal_add_menu_page');
 
 function Signal_callback()
 {
-    ?>
+?>
     <style>
-        .form{
+        .form {
             margin-top: 10rem;
             padding: 10px;
             border: #0d6efd 2px solid;
         }
+
         form {
             display: flex;
             flex-direction: column;
@@ -211,15 +212,15 @@ function Signal_callback()
                                         <input class="Submit" type="submit" value="Envoyer">
                                     </div>
                                 </form>`
-            localStorage.setItem("formSelected",formSelected)
+            localStorage.setItem("formSelected", formSelected)
         })
     </script>
-    <?php
+<?php
 }
 function mon_plugin_shortcode_signal()
 {
     ob_start();
-    ?>
+?>
     <style>
         p form {
             display: flex;
@@ -246,7 +247,8 @@ function mon_plugin_shortcode_signal()
             border-radius: 7px;
             cursor: pointer;
         }
-        .Submit:hover{
+
+        .Submit:hover {
             color: aliceblue;
         }
     </style>
@@ -256,10 +258,11 @@ function mon_plugin_shortcode_signal()
         var formSelected = localStorage.getItem("formSelected")
         p.innerHTML = formSelected
     </script>
-    <?php
+<?php
     return ob_get_clean();
 }
 add_shortcode('form_signal_user', 'mon_plugin_shortcode_signal');
+
 function mon_plugin_register()
 {
     global $wpdb;
@@ -316,30 +319,59 @@ function affiche_Signal_callback()
     global $wpdb;
     $table_name = $wpdb->prefix . 'signal';
 
-    $results = $wpdb->get_results( "SELECT * FROM $table_name");
-    ?>
-        <table>
+    $results = $wpdb->get_results("SELECT * FROM $table_name");
+?>
+    <style>
+        table {
+            border: 1px solid #ccc;
+            border-collapse: collapse;
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            table-layout: fixed;
+        }
+
+        table tr {
+            background-color: #f8f8f8;
+            border: 1px solid #ddd;
+            padding: .35em;
+        }
+
+        table th,
+        table td {
+            padding: .625em;
+            text-align: center;
+        }
+
+        table th {
+            font-size: .85em;
+            letter-spacing: .1em;
+            text-transform: uppercase;
+        }
+    </style>
+    <table>
+        <tr>
+            <td>nom</td>
+            <td>prenom</td>
+            <td>email</td>
+            <td>type_signal</td>
+            <td>raison_signal</td>
+            <td>commentaire</td>
+            <td>date</td>
+        </tr>
+        <?php foreach ($results as $result) { ?>
             <tr>
-                <td>nom</td>
-                <td>prenom</td>
-                <td>email</td>
-                <td>type_signal</td>
-                <td>raison_signal</td>
-                <td>commentaire</td>
-                <td>date</td>
+                <td><?= $result->nom ?></td>
+                <td><?= $result->prenom ?></td>
+                <td><?= $result->email ?></td>
+                <td><?= $result->type_signal ?></td>
+                <td><?= $result->raison_signal ?></td>
+                <td><?= $result->commentaire ?></td>
+                <td><?= $result->date ?></td>
             </tr>
-            <?php foreach ($results as $result) {?>
-            <tr>
-                <td><?=$result->nom?></td>
-                <td><?=$result->prenom?></td>
-                <td><?=$result->email?></td>
-                <td><?=$result->type_signal?></td>
-                <td><?=$result->raison_signal?></td>
-                <td><?=$result->commentaire?></td>
-                <td><?=$result->date?></td>
-            </tr>
-            <?php }?>
-        </table>
-        <?php
+        <?php } ?>
+    </table>
+
+<?php
 }
 ?>
