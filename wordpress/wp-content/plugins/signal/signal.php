@@ -246,7 +246,7 @@ function mon_plugin_shortcode_signal()
             border-radius: 7px;
             cursor: pointer;
         }
-        .Submit:hover{
+        .Submit:hover{form_signal_user
             color: aliceblue;
         }
     </style>
